@@ -12,25 +12,26 @@ class SemanticLayout(Layout):
     
     def line(self, obj, label, input, help_string='', error=None):
         
-        _class = "control-group"
+        _class = "field"
         if error:
             _class = _class + ' error'
         
         div_group = Div(_class=_class, id='div_'+obj.id, newline=True)
         with div_group: 
-            div_group << input.get_label(_class='control-label')
-            div = Div(_class='controls', newline=True)
-            with div:
-                div << input                    
-                div << Tag('p', _class="help help-block", _value=help_string)
-                if error:
-                    div << Div(_class="message help-block", _value=error, newline=True)
+            div_group << input.get_label()
+#            div = Div(_class='controls', newline=True)
+#            with div:
+            div_group << input
+            if help_string:
+                div_group << Tag('p', _class="help help-block", _value=help_string)
+            if error:
+                div_group << Div(_class="ui red pointing above ui label", _value=error, newline=True)
                     
-            div_group << str(div)
         return str(div_group)
     
     def _buttons_line(self, buttons):
-        div = Div(_class="form-actions")
+#        div = Div(_class="form-actions")
+        div = Div()
         with div:
             div << buttons
         return div
