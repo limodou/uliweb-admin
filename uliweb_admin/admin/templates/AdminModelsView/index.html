@@ -6,10 +6,10 @@
 
 {{block main}}
 
-<div style="margin-bottom:15px;">
+<div class="ui two column grid">
+  <div class="column">
     请选择要处理的Model：
-    <div class="ui inline selection dropdown" id="models">
-      <input type="hidden" name="model">
+    <div class="ui simple inverted dropdown" id="models">
       <div class="text">{{=model or '请选择'}}</div>
       <i class="dropdown icon"></i>
       <div class="menu">
@@ -18,7 +18,8 @@
         {{pass}}
       </div>
     </div>
-    
+  </div>
+  <div class="right aligned column">
     <div class="ui flat blue tiny button" id="btnAdd">
         <i class="add icon"></i>Add
     </div>
@@ -28,8 +29,8 @@
     <div class="ui flat red tiny button" id="btnDelete">
         <i class="minus icon"></i>Delete
     </div>
+  </div>
 </div>
-
 {{if table:}}
 
     {{use "jqutils"}}

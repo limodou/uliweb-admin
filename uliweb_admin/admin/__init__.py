@@ -31,7 +31,7 @@ def menu_render(name, active='', validators=None, id=None, _class=None):
             pass
         elif _t == 'begin':
             if index == 0:
-                s.append('<div class="ui vertical fluid menu">\n')
+                s.append('<div class="ui inverted vertical secondary fluid menu">\n')
             else:
                 pass
         else:
