@@ -1,6 +1,12 @@
 {{extend "admin_layout.html"}}
 
 {{block main}}
-    <h2>创建新记录</h2>
-    {{<< form}}
+    <div class="ui attached top message">
+        <h2 class="ui header">创建新记录</h2>
+    </div>
+    {{build = form.build}}
+    <form class="ui form attached fluid segment">
+    {{<<build.body}}
+    {{<<build.buttons_line}}
+    </form>
 {{end}}
