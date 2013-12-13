@@ -1,0 +1,5 @@
+body {margin:0;}
+.header {background-color:#00B5AD;color:white;margin:0em;padding:4px;}
+.container {margin-left:204px;position:relative;min-height:100%;background-color:white;}
+.side-menu {position:absolute; top: 0px; left:-200px;width:200px;}
+.content {padding:10px;}

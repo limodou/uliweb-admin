@@ -1,0 +1,43 @@
+{{extend "layout.html"}}
+
+{{block content}}
+{{use "jquery"}}
+{{use "semantic"}}
+{{link "admin/admin.css"}}
+
+<div class="header">
+    <div class="ui small secondary inverted borderless menu">
+        <div class="right menu">
+          <div class="ui pointing dropdown item">
+            More <i class="icon dropdown"></i>
+            <div class="menu">
+              <a class="item"><i class="edit icon"></i> Edit Profile</a>
+              <a class="item"><i class="globe icon"></i> Choose Language</a>
+              <a class="item"><i class="settings icon"></i> Logout</a>
+            </div>
+          </div>
+        </div>
+    </div>    
+</div>
+
+<div class="container">
+    <div class="side-menu">
+        {{block side_menu}}
+        {{<< functions.menu('admin')}}
+        {{end}}
+    </div>
+    <div class="content">
+    {{block main}}
+    {{end}}
+    </div>
+</div>
+<script>
+$(function(){
+    $('.header .ui.dropdown').dropdown({
+        on: 'hover',
+        action: 'nothing'
+    });
+    
+});
+</script>
+{{end}}

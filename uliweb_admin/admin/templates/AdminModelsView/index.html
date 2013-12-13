@@ -1,0 +1,119 @@
+{{extend "admin_layout.html"}}
+
+{{block side_menu}}
+{{<< functions.menu('admin', 'admin/models')}}
+{{end}}
+
+{{block main}}
+
+<div style="margin-bottom:15px;">
+    请选择要处理的Model：
+    <div class="ui inline selection dropdown" id="models">
+      <input type="hidden" name="model">
+      <div class="text">{{=model or '请选择'}}</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{for m in models:}}
+        <div class="item {{if m==model:}}active{{pass}}" data-value="{{=m}}">{{=m}}</div>
+        {{pass}}
+      </div>
+    </div>
+    
+    <div class="ui flat blue tiny button" id="btnAdd">
+        <i class="add icon"></i>Add
+    </div>
+    <div class="ui flat green tiny button" id="btnEdit">
+        <i class="edit icon"></i>Edit
+    </div>
+    <div class="ui flat red tiny button" id="btnDelete">
+        <i class="minus icon"></i>Delete
+    </div>
+</div>
+
+{{if table:}}
+
+    {{use "jqutils"}}
+    {{use "mmgrid"}}
+    {{link "mmgrid/mmPaginator.css"}}
+    {{link "mmgrid/mmPaginator.js"}}
+
+    {{from uliweb.core.js import json_dumps}}
+
+    {{table_id = 'model_table'}}
+    <div>
+    <table id="{{=table_id}}"></table>
+    <div id="pg" style="text-align: right;"></div>
+    </div>
+    
+    <script>
+
+    $(function(){
+        var query_string = $.query_string.set('data', '').toString();
+        var settings = {
+            multiSelect: true,
+            nowrap: true,
+            indexCol: true,
+            method:'get',
+            nameField:'field',
+            root: 'rows',
+            width:'auto',
+            height:'auto',
+            checkCol:true,
+            url:"{{=request.path}}" + query_string,
+            remoteSort:true,
+            cols:{{if defined('view'):}}
+                {{=json_dumps(view.get_columns(False))}}
+            {{else:}}
+                {{=json_dumps(table.get_columns(False))}}
+            {{pass}},
+            idField:'id',
+            filename: 'download.xls',
+            filename_alt: 'download.xls'
+        }
+        var pageopts = {
+            totalCountName: 'total',
+            limitParamName: 'limit'
+        }
+            
+        var pg;
+        pg = $('<div class="mm-pagination" style="text-align: left;"></div>');
+        $('#{{=table_id}}').after(pg);
+        settings.plugins = [pg.mmPaginator(pageopts)];
+            
+        var mmg = $('#{{=table_id}}').mmGrid(settings);
+        
+        $("#btnAdd").on('click', function(){
+            window.location.href = '/admin/models/add?model={{=model}}';
+        });
+        $("#btnEdit").on('click', function(){
+            var index = mmg.mmGrid('selectedItem');
+            var data = mmg.mmGrid('row', index);
+            window.location.href = '/admin/models/edit?model={{=model}}&id='+data.id;
+        });
+        $("#btnDelete").on('click', function(){
+            var ids = [];
+            var items = mmg.mmGrid('selectedItems');
+            for(var i=0; i<items.length; i++)
+                ids.push(items[i].id);
+            $.post('/admin/models/delete?model={{=model}}', {ids:ids}).success(function(data){
+                if (data.success){
+//                    show_message(data.message);
+                    mmg.mmGrid('load');
+                }
+            });
+        });
+        
+    });
+    </script>
+{{pass}}
+
+<script>
+$(function(){
+    $('#models').dropdown({
+        onChange:function(value, text){
+            window.location.href = '/admin/models?model='+value;
+        }
+    });
+});
+</script>
+{{end}}
