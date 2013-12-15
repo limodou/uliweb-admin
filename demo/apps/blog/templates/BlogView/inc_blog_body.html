@@ -10,6 +10,5 @@
         </div>
     </h2>
     <div class="ui divider"></div>
-    {{from uliweb.utils.textconvert import text2html}}
-    <div>{{<< text2html(blog.content)}}</div>
+    <div class="blog-content">{{<< blog.html}}</div>
 </div>

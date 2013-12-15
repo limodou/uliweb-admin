@@ -33,3 +33,19 @@ class BlogView(object):
         
         return {'blogs':blogs, 'category':category}
         
+    @classmethod
+    def _pre_save(cls, data):
+        from par.bootstrap_ext import blocks
+        from par.md import parseHtml
+        
+        data['html'] = parseHtml(data['content'], block_callback=blocks,
+            tag_class={'table':'table table-bordered', 'pre':'prettyprint'},
+        )
+        
+    @classmethod
+    def _pre_save_add(cls, data):
+        cls._pre_save(data)
+        
+    @classmethod
+    def _pre_save_edit(cls, obj, data):
+        cls._pre_save(data)

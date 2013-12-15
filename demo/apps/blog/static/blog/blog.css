@@ -3,10 +3,12 @@ html, body {margin:0;height:100%;padding:0;background-color:whitesmoke;}
 .head h1.ui.header {font-size:3em;margin-top:20px;font-family:Bebas-Neue, serif;text-align:center;margin-top:20px;}
 #blogs {background-color:white;width:90%; margin:0 auto;top:0;}
 .footer {text-align:center;}
-.blog-body {position:relative;}
-.blog-body {padding-left:80px;}
+.blog-body {position:relative;padding-left:80px;}
+.blog-content a.anchor {color:white;text-decoration:none;}
+.blog-content pre {background-color:whitesmoke;font-size:1em;padding:4px;border-left:4px solid brown;}
 .blog h2.ui.header {margin-top:0.5em;}
 .blog h2.ui.header a {color:black;text-decoration:none;}
+.blog h2.ui.header a:hover {text-decoration:underline;}
 /* dateinfo */
 .blog p.dateinfo {
 position:absolute;

@@ -30,15 +30,14 @@ class AdminModelsView(object):
     @expose('')
     def index(self):
         model = request.GET.get('model', '')
-            
+        
         if model not in self.m:
             model = ''
         
         template_data = {'table':''}
         
         if model:
-            section = settings.get_var('ADMIN_MODEL_%s_LIST' % model, {})
-            fields = section.get('fields')
+            fields = self._get_fields(model, 'list')
             view = functions.ListView(model, fields=fields)
 
             if 'data' in request.values:
@@ -51,13 +50,59 @@ class AdminModelsView(object):
         
         return template_data
     
-    def _get_fields(self, Model):
-        fields = [k for k, prop in Model._fields_list 
-            if not ((hasattr(prop, 'auto_now') and prop.auto_now) or 
-                (hasattr(prop, 'auto_now_add') and prop.auto_now_add))
-            ]
+    def _get_section(self, modelname, type):
+        """
+        Get section info from settings
+        
+        model should be model's name
+        type should be 'list', 'add', 'edit'
+        """
+        from uliweb import settings
+        
+        return settings.get_var('ADMIN_MODEL_%s_%s' % (modelname, type.upper()), {})
+
+    def _get_fields(self, modelname, type):
+        """
+        Get fields according Model and type
+        type should be 'list', 'add', 'edit'
+        
+        It'll find settings just like 'ADMIN_MODEL_<modelname>_<type>',
+        if not found, it'll use Model._fields_list
+            
+        """
+        section = self._get_section(modelname, type)
+        fields = section.get('fields')
+        
+        if not fields:
+            fields = [k for k, prop in functions.get_model(modelname)._fields_list 
+                if not ((hasattr(prop, 'auto_now') and prop.auto_now) or 
+                    (hasattr(prop, 'auto_now_add') and prop.auto_now_add))
+                ]
         return fields
         
+    def _get_parameters(self, modelname, type, params):
+        from uliweb.utils.common import import_attr
+        
+        d = {}
+        section = self._get_section(modelname, type)
+        for k, _t in params.items():
+            _type = _t.get('type')
+            _default = _t.get('default')
+            
+            v = section.get(k)
+            if not v:
+                v = _default
+            
+            if v:
+                if _type == 'function':
+                    if isinstance(v, (str, unicode)):
+                        v = import_attr(v)
+                else:
+                    if callable(v):
+                        v = v()
+                d[k] = v
+        return d
+                    
     def _post_created_form(self, fcls):
         from uliweb.form import SelectField
         from uliweb_admin.semantic.form_help import SemanticLayout
@@ -79,24 +124,29 @@ class AdminModelsView(object):
     def add(self):
         
         model = request.GET.get('model', '')
-        Model = functions.get_model(model)
         
         def post_created_form(fcls, model):
             self._post_created_form(fcls)
         
         template_data = {'model':model}
         
+        mapping = {
+            'pre_save':{'type':'function'},
+        }
+        
+        params = self._get_parameters(model, 'add', mapping)
+        
         view = functions.AddView(model, 
             ok_url=url_for(self.__class__.index, model=model),
-            fields=self._get_fields(Model),
+            fields=self._get_fields(model, 'add'),
             post_created_form=post_created_form, 
-            template_data=template_data)
+            template_data=template_data,
+            **params)
         return view.run()
     
     def edit(self):
 
         model = request.GET.get('model', '')
-        Model = functions.get_model(model)
         
         id = request.GET.get('id')
         if not id:
@@ -110,11 +160,18 @@ class AdminModelsView(object):
         
         template_data = {'model':model}
         
+        mapping = {
+            'pre_save':{'type':'function'},
+        }
+        
+        params = self._get_parameters(model, 'edit', mapping)
+        
         view = functions.EditView(model, obj=obj, 
             ok_url=url_for(self.__class__.index, model=model),
-            fields=self._get_fields(Model),
+            fields=self._get_fields(model, 'edit'),
             post_created_form=post_created_form, 
-            template_data=template_data)
+            template_data=template_data,
+            **params)
         return view.run()
     
     def delete(self):
