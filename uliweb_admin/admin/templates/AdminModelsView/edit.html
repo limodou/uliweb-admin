@@ -8,7 +8,7 @@
     <h2 class="ui header">{{=_('Edit The Record')}}</h2>
 </div>
 {{build = form.build}}
-<form class="ui form attached fluid segment" action="/admin/models/edit?model={{=model}}" method="POST">
+<form class="ui form attached fluid segment" action="/admin/models/edit?model={{=model}}&id={{=object.id}}" method="POST">
 {{<<build.body}}
 {{<<build.buttons_line}}
 </form>
