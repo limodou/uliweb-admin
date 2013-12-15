@@ -1,0 +1,15 @@
+{{extend "BlogView/blog_layout.html"}}
+
+{{block content_container}}
+<div class="ui breadcrumb">
+  <a class="section" href="/">Home</a>
+  <i class="right arrow icon divider"></i>
+  <span class="section">{{=category.name}}</span>
+</div>
+    
+{{for blog in blogs:}}
+<div class="ui stacked segment blog">
+    {{include "BlogView/inc_blog_body.html"}}
+</div>
+{{pass}}
+{{end}}

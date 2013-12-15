@@ -1,0 +1,33 @@
+html, body {margin:0;height:100%;padding:0;background-color:whitesmoke;}
+.head {color:white;height:100px;border-top:4px solid #59636c;background-color:#263346;position:relative;}
+.head h1.ui.header {font-size:3em;margin-top:20px;font-family:Bebas-Neue, serif;text-align:center;margin-top:20px;}
+#blogs {background-color:white;width:90%; margin:0 auto;top:0;}
+.footer {text-align:center;}
+.blog-body {position:relative;}
+.blog-body {padding-left:80px;}
+.blog h2.ui.header {margin-top:0.5em;}
+.blog h2.ui.header a {color:black;text-decoration:none;}
+/* dateinfo */
+.blog p.dateinfo {
+position:absolute;
+left:0px;
+top:5px;
+background: url(/static/blog/date-bg.gif) no-repeat;
+height: 83px;
+width: 64px;
+padding: 8px 0 0 1px;
+font: bold 15px Arial, Helvetica, sans-serif;
+text-transform: uppercase;
+text-align: center;
+letter-spacing: 2px;
+color: #fff;
+margin:0;
+}
+.blog p.dateinfo span {
+font: bold 30px Arial, Helvetica, sans-serif;
+display: block;
+color: #555;
+margin: 8px 0 0 0;
+padding: 0;
+letter-spacing: 0;
+}

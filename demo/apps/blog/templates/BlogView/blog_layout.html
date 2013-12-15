@@ -4,6 +4,7 @@
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <title>Blog Demo</title>
 </head>
+{{use "jquery"}}
 {{use "semantic"}}
 
 <body>
@@ -11,6 +12,7 @@
     <h1 class="ui header">Uliweb Blog Demo</h1>
 </div>
 <div class="ui attached bottom segment" id="blogs">
+    {{block content_container}}
     <div class="ui attached grid">
         <div class="twelve wide column">
             {{block content}}{{end}}
@@ -19,6 +21,7 @@
             {{block sidebar}}{{end}}
         </div>
     </div>
+    {{end}}
 </div>
 
 <div class="ui basic segment footer">

@@ -1,0 +1,15 @@
+<div class="blog-body">
+    <p class="dateinfo">{{=blog.created_time.strftime("%b").upper()}}<span>{{=blog.created_time.day}}</span></p>
+    <h2 class="ui header">
+        <div class="content">
+            <a href="/blog/{{=blog.id}}">{{=blog.title}}</a>
+            <div class="sub header">{{=blog.created_time.strftime("%Y/%m/%d")}}
+            •
+            <a href="/blog/category/{{=blog._category_}}">{{=unicode(blog.category)}}</a>
+            </div>
+        </div>
+    </h2>
+    <div class="ui divider"></div>
+    {{from uliweb.utils.textconvert import text2html}}
+    <div>{{<< text2html(blog.content)}}</div>
+</div>

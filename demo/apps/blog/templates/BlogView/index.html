@@ -3,21 +3,7 @@
 {{block content}}
 {{for blog in blogs:}}
 <div class="ui stacked segment blog">
-    <p class="dateinfo">{{=blog.created_time.strftime("%b").upper()}}<span>{{=blog.created_time.day}}</span></p>
-    <div class="blog-body">
-        <h2 class="ui header">
-            <div class="content">
-                {{=blog.title}}
-                <div class="sub header">{{=blog.created_time.strftime("%Y/%m/%d")}}
-                •
-                {{=unicode(blog.category)}}
-                </div>
-            </div>
-        </h2>
-        <div class="ui divider"></div>
-        {{from uliweb.utils.textconvert import text2html}}
-        <div>{{<< text2html(blog.content)}}</div>
-    </div>
+    {{include "BlogView/inc_blog_body.html"}}
 </div>
 {{pass}}
 {{end}}
@@ -26,7 +12,7 @@
     <h3 class="ui header">Categories</h3>
     <ul class="ui list">
     {{for c in categories:}}
-        <li class="item">{{=unicode(c)}}</li>
+        <li class="item"><a href="/blog/category/{{=c.id}}">{{=unicode(c)}}</a></li>
     {{pass}}
     </ul>
 {{end}}

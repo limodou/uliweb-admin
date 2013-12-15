@@ -21,6 +21,7 @@
     </div>
   </div>
   <div class="right aligned column">
+    {{if model:}}
     <a class="ui flat blue tiny button" id="btnAdd" href="/admin/models/add?model={{=model}}">
         <i class="add icon"></i>{{=_('Add')}}
     </a>
@@ -30,6 +31,7 @@
     <div class="ui flat red tiny button" id="btnDelete">
         <i class="minus icon"></i>{{=_('Delete')}}
     </div>
+    {{pass}}
   </div>
 </div>
 {{if table:}}
