@@ -1,0 +1,14 @@
+{{extend "BlogView/blog_layout.html"}}
+
+{{block content}}
+<div class="blog">
+    {{for blog in blogs:}}
+    <div class="blog-item">
+        <div class="blog-title">{{=blog.title}}</div>
+        <div class="blog-content">{{=blog.content}}</div>
+        <div class="blog-category">{{=unicode(blog.category)}}</div>
+        <div class="blog-created-time">{{=blog.created_time}}</div>
+    </div>
+    {{pass}}
+</div>
+{{end}}

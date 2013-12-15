@@ -1,4 +1,4 @@
-{{extend "layout.html"}}
+{{extend "_uliweb_admin_layout.html"}}
 
 {{block content}}
 {{use "jquery"}}
@@ -8,11 +8,10 @@
     <div class="ui small secondary inverted borderless menu">
         <div class="right menu">
           <div class="ui pointing dropdown item">
-            More <i class="icon dropdown"></i>
+            <i class="icon user"></i> {{=unicode(request.user)}}
+            <i class="icon dropdown"></i>
             <div class="menu">
-              <a class="item"><i class="edit icon"></i> Edit Profile</a>
-              <a class="item"><i class="globe icon"></i> Choose Language</a>
-              <a class="item"><i class="settings icon"></i> Logout</a>
+              <a class="item" href="/logout"><i class="sign out icon"></i> Logout</a>
             </div>
           </div>
         </div>
@@ -32,7 +31,7 @@
 </div>
 <script>
 $(function(){
-    $('.header .ui.dropdown').dropdown({
+    $('.head .ui.dropdown').dropdown({
         on: 'hover',
         action: 'nothing'
     });

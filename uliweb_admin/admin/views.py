@@ -4,12 +4,22 @@ from uliweb.i18n import ugettext_lazy as _
 
 @expose('/admin')
 class AdminView(object):
+    def __begin__(self):
+        functions.require_login()
+        if not request.user.is_superuser:
+            error('You have not permisstion to visit the page')
+
     @expose('')
     def index(self):
         return {}
     
 @expose('/admin/models')
 class AdminModelsView(object):
+    def __begin__(self):
+        functions.require_login()
+        if not request.user.is_superuser:
+            error('You have not permisstion to visit the page')
+        
     def __init__(self):
         from uliweb import settings
         

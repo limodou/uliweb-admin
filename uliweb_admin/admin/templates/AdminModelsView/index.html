@@ -1,4 +1,4 @@
-{{extend "admin_layout.html"}}
+{{extend "uliweb_admin_layout.html"}}
 
 {{block side_menu}}
 {{<< functions.menu('admin', 'admin/models')}}
@@ -9,9 +9,9 @@
 
 <div class="ui two column grid">
   <div class="column">
-    请选择要处理的Model：
+    {{=_("Choose Model")}}：
     <div class="ui simple inverted dropdown" id="models">
-      <div class="text">{{=model or '请选择'}}</div>
+      <div class="text">{{=model or _('Choose...')}}</div>
       <i class="dropdown icon"></i>
       <div class="menu">
         {{for m in models:}}
@@ -21,14 +21,14 @@
     </div>
   </div>
   <div class="right aligned column">
-    <div class="ui flat blue tiny button" id="btnAdd">
-        <i class="add icon"></i>Add
-    </div>
+    <a class="ui flat blue tiny button" id="btnAdd" href="/admin/models/add?model={{=model}}">
+        <i class="add icon"></i>{{=_('Add')}}
+    </a>
     <div class="ui flat green tiny button" id="btnEdit">
-        <i class="edit icon"></i>Edit
+        <i class="edit icon"></i>{{=_('Edit')}}
     </div>
     <div class="ui flat red tiny button" id="btnDelete">
-        <i class="minus icon"></i>Delete
+        <i class="minus icon"></i>{{=_('Delete')}}
     </div>
   </div>
 </div>
@@ -84,25 +84,26 @@
             
         var mmg = $('#{{=table_id}}').mmGrid(settings);
         
-        $("#btnAdd").on('click', function(){
-            window.location.href = '/admin/models/add?model={{=model}}';
-        });
         $("#btnEdit").on('click', function(){
             var index = mmg.mmGrid('selectedItem');
-            var data = mmg.mmGrid('row', index);
-            window.location.href = '/admin/models/edit?model={{=model}}&id='+data.id;
+            if (index.length > 0){
+                var data = mmg.mmGrid('row', index);
+                window.location.href = '/admin/models/edit?model={{=model}}&id='+data.id;
+            }else alert('Please choose one record first!');
         });
         $("#btnDelete").on('click', function(){
             var ids = [];
             var items = mmg.mmGrid('selectedItems');
-            for(var i=0; i<items.length; i++)
-                ids.push(items[i].id);
-            $.post('/admin/models/delete?model={{=model}}', {ids:ids}).success(function(data){
-                if (data.success){
-//                    show_message(data.message);
-                    mmg.mmGrid('load');
-                }
-            });
+            if (items.length > 0){
+                for(var i=0; i<items.length; i++)
+                    ids.push(items[i].id);
+                $.post('/admin/models/delete?model={{=model}}', {ids:ids}).success(function(data){
+                    if (data.success){
+                        show_message(data.message);
+                        mmg.mmGrid('load');
+                    }
+                });
+            }else alert('Please choose at least one record first!');
         });
         
     });
