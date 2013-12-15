@@ -41,16 +41,29 @@ class AdminModelsView(object):
     def add(self):
         from uliweb_admin.semantic.form_help import SemanticLayout
         from uliweb.form.widgets import Button
+        from uliweb.core.html import Tag
         
         model = request.GET.get('model', '')
-
+        Model = functions.get_model(model)
+        
         def post_created_form(fcls, model):
             fcls.layout_class = SemanticLayout
-            fcls.form_buttons = [str(Button(value=_('Save'), _class="ui blue submit button", name="submit", type="submit"))]
+            fcls.form_buttons = [
+                str(Button(value=_('Save'), _class="ui small blue flat submit button", name="submit", type="submit")),
+                str(Tag('a', _('Cancel'), _class="ui small reset gray button")),
+                ]
         
         template_data = {'model':model}
+        
+        fields = [k for k, prop in Model._fields_list 
+            if not ((hasattr(prop, 'auto_now') and prop.auto_now) or 
+                (hasattr(prop, 'auto_now_add') and prop.auto_now_add))
+            ]
+        
         view = functions.AddView(model, ok_url=url_for(self.__class__.index, model=model),
-            post_created_form=post_created_form, template_data=template_data)
+            fields=fields,
+            post_created_form=post_created_form, 
+            template_data=template_data)
         return view.run()
     
     def edit(self):

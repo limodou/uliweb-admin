@@ -3,12 +3,6 @@ from uliweb.core.html import Buf, Tag, Div
     
 class SemanticLayout(Layout):
     form_class = 'ui form segment'
-    field_classes = {
-        ('Text', 'Password', 'TextArea'):'input-xlarge',
-        ('Button', 'Submit', 'Reset', 'Checkbox', 'File', 'Hidden'):'',
-        ('Select', 'RadioSelect'):'',
-        ('Radio',):'radio',
-        }
     
     def line(self, obj, label, input, help_string='', error=None):
         
@@ -19,8 +13,6 @@ class SemanticLayout(Layout):
         div_group = Div(_class=_class, id='div_'+obj.id, newline=True)
         with div_group: 
             div_group << input.get_label()
-#            div = Div(_class='controls', newline=True)
-#            with div:
             div_group << input
             if help_string:
                 div_group << Tag('p', _class="help help-block", _value=help_string)
@@ -30,9 +22,9 @@ class SemanticLayout(Layout):
         return str(div_group)
     
     def _buttons_line(self, buttons):
-#        div = Div(_class="form-actions")
         div = Div()
         with div:
+            print 'xxxxxxxxxxxxxxx', buttons
             div << buttons
         return div
     
