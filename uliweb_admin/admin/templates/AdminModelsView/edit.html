@@ -1,6 +1,17 @@
 {{extend "admin_layout.html"}}
 
 {{block main}}
-    <h2>修改记录</h2>
-    {{<< form}}
+{{use "jquery", ui=True}}
+
+<div class="ui attached top message">
+    <h2 class="ui header">{{=_('Edit The Record')}}</h2>
+</div>
+{{build = form.build}}
+<form class="ui form attached fluid segment" action="/admin/models/edit?model={{=model}}" method="POST">
+{{<<build.body}}
+{{<<build.buttons_line}}
+</form>
+
+{{include "AdminModelsView/inc_init_js.html"}}
+
 {{end}}

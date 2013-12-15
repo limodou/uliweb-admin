@@ -1,12 +1,18 @@
 {{extend "admin_layout.html"}}
 
 {{block main}}
-    <div class="ui attached top message">
-        <h2 class="ui header">创建新记录</h2>
-    </div>
-    {{build = form.build}}
-    <form class="ui form attached fluid segment" action="/admin/models/add?model={{=model}}" method="POST">
-    {{<<build.body}}
-    {{<<build.buttons_line}}
-    </form>
+{{use "jquery", ui=True}}
+{{use "select2"}}
+
+<div class="ui attached top message">
+    <h2 class="ui header">{{=_('Create New Record')}}</h2>
+</div>
+{{build = form.build}}
+<form class="ui form attached fluid segment" action="/admin/models/add?model={{=model}}" method="POST">
+{{<<build.body}}
+{{<<build.buttons_line}}
+</form>
+    
+{{include "AdminModelsView/inc_init_js.html"}}
+
 {{end}}

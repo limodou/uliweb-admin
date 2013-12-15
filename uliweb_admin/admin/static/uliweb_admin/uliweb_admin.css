@@ -9,3 +9,4 @@ html, body {margin:0;background-color:black;padding:0;height:100%;}
 .ui.secondary.inverted.menu .active.item {
 background-color: rgba(255, 255, 255, 0.3);
 }
+.ui.form span.field_required {font-weight:bold;color:red;font-size:1.5em;}

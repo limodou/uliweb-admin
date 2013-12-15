@@ -1,0 +1,12 @@
+{{block init_js}}
+<script>
+$(function() {
+    $('.form input.field_date').datepicker({ dateFormat: 'yy-mm-dd' });
+    $('.form .ui.checkbox').checkbox();    
+    $('.form .ui.radio.checkbox').checkbox();
+    $('.form select').select2({width: '80%',
+        allowClear:true,
+        });
+});
+</script>
+{{end}}

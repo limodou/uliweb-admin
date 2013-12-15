@@ -12,8 +12,16 @@ class SemanticLayout(Layout):
         
         div_group = Div(_class=_class, id='div_'+obj.id, newline=True)
         with div_group: 
-            div_group << input.get_label()
-            div_group << input
+            _type = self.get_widget_name(obj)
+            if _type == 'Checkbox':
+                div = Div(_class='ui checkbox')
+                with div:
+                    div << input
+                    div << input.get_label()
+                div_group << div
+            else:
+                div_group << input.get_label()
+                div_group << input
             if help_string:
                 div_group << Tag('p', _class="help help-block", _value=help_string)
             if error:
@@ -24,7 +32,6 @@ class SemanticLayout(Layout):
     def _buttons_line(self, buttons):
         div = Div()
         with div:
-            print 'xxxxxxxxxxxxxxx', buttons
             div << buttons
         return div
     
