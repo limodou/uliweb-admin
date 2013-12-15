@@ -103,7 +103,7 @@ class AdminModelsView(object):
         if not obj:
             error("Can't found object %s of Model %s" % (id, model))
         
-        def post_created_form(fcls, model):
+        def post_created_form(fcls, model, obj):
             self._post_created_form(fcls)
         
         template_data = {'model':model}
