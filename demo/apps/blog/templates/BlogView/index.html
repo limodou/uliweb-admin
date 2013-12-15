@@ -2,20 +2,22 @@
 
 {{block content}}
 {{for blog in blogs:}}
-<div class="ui stacked segment">
-    <h2 class="ui header">
-        <i class="calendar icon"></i>
-        <div class="content">
-            {{=blog.title}}
-            <div class="sub header">{{=blog.created_time.strftime("%Y/%m/%d")}}
-            •
-            {{=unicode(blog.category)}}
+<div class="ui stacked segment blog">
+    <p class="dateinfo">{{=blog.created_time.strftime("%b").upper()}}<span>{{=blog.created_time.day}}</span></p>
+    <div class="blog-body">
+        <h2 class="ui header">
+            <div class="content">
+                {{=blog.title}}
+                <div class="sub header">{{=blog.created_time.strftime("%Y/%m/%d")}}
+                •
+                {{=unicode(blog.category)}}
+                </div>
             </div>
-        </div>
-    </h2>
-    <div class="ui divider"></div>
-    {{from uliweb.utils.textconvert import text2html}}
-    <div>{{<< text2html(blog.content)}}</div>
+        </h2>
+        <div class="ui divider"></div>
+        {{from uliweb.utils.textconvert import text2html}}
+        <div>{{<< text2html(blog.content)}}</div>
+    </div>
 </div>
 {{pass}}
 {{end}}
