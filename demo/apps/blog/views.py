@@ -13,7 +13,7 @@ class BlogView(object):
         size = 10
         offset = (page - 1)*size
         
-        blogs = self.M.all().order_by(self.M.c.created_time.desc()).offset(offset).limit(size)
+        blogs = self.M.filter(self.M.c.draft==False).order_by(self.M.c.created_time.desc()).offset(offset).limit(size)
         categories = self.C.all()
         
         return {'blogs':blogs, 'categories':categories}
