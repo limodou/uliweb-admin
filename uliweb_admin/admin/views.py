@@ -24,7 +24,7 @@ class AdminModelsView(object):
         from uliweb import settings
         
         self.m = []
-        for k, v in settings.ADMIN_MODELS.items():
+        for k in settings.ADMIN_MODELS.models:
             self.m.append(k)
     
     @expose('')
@@ -37,7 +37,9 @@ class AdminModelsView(object):
         template_data = {'table':''}
         
         if model:
-            view = functions.ListView(model)
+            section = settings.get_var('ADMIN_MODEL_%s_LIST' % model, {})
+            fields = section.get('fields')
+            view = functions.ListView(model, fields=fields)
 
             if 'data' in request.values:
                 return json(view.json())

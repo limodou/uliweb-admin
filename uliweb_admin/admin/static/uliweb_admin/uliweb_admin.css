@@ -3,6 +3,7 @@ html, body {margin:0;background-color:black;padding:0;height:100%;}
 .container {margin-left:210px;position:relative;min-height:100%;background-color:white;}
 .side-menu {position:absolute; top: 5px; left:-205px;width:200px;}
 .content {padding:10px;}
+.content .grid {margin-left:0;margin-right:0;}
 .mmGrid table {font-size:14px;}
 .mmPaginator {font-size:14px;}
 .mmGrid .mmg-backboard label {font-size:14px;width:120px;}
@@ -10,3 +11,4 @@ html, body {margin:0;background-color:black;padding:0;height:100%;}
 background-color: rgba(255, 255, 255, 0.3);
 }
 .ui.form span.field_required {font-weight:bold;color:red;font-size:1.5em;}
+.ui-pnotify-text {font-size:0.6em;}

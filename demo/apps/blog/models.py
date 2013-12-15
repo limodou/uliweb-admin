@@ -17,7 +17,7 @@ class Blog(Model):
     modified_time = Field(datetime.datetime, verbose_name=_("Modified Time"), 
         auto_now_add=True)
     category = Reference('blogcategory', verbose_name=_('Category'), index=True)
-    private = Field(bool, verbose_name=_('Is Private'))
+    private = Field(bool, verbose_name=_('Private'))
     
     def __unicode__(self):
         return self.title
