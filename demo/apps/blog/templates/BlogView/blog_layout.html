@@ -1,1 +1,30 @@
-{{extend "layout.html"}}
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<title>Blog Demo</title>
+</head>
+{{use "semantic"}}
+
+<body>
+<div class="head">
+    <h1 class="ui header">Uliweb Blog Demo</h1>
+</div>
+<div class="ui attached bottom segment" id="blogs">
+    <div class="ui attached grid">
+        <div class="twelve wide column">
+            {{block content}}{{end}}
+        </div>
+        <div class="four wide column">
+            {{block sidebar}}{{end}}
+        </div>
+    </div>
+</div>
+
+<div class="ui basic segment footer">
+    Designed by limodou. CSS framework is semantic-ui.
+</div>
+{{link "blog/blog.css"}}
+
+</body>
+</html>

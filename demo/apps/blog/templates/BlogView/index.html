@@ -1,14 +1,30 @@
 {{extend "BlogView/blog_layout.html"}}
 
 {{block content}}
-<div class="blog">
-    {{for blog in blogs:}}
-    <div class="blog-item">
-        <div class="blog-title">{{=blog.title}}</div>
-        <div class="blog-content">{{=blog.content}}</div>
-        <div class="blog-category">{{=unicode(blog.category)}}</div>
-        <div class="blog-created-time">{{=blog.created_time}}</div>
-    </div>
-    {{pass}}
+{{for blog in blogs:}}
+<div class="ui stacked segment">
+    <h2 class="ui header">
+        <i class="calendar icon"></i>
+        <div class="content">
+            {{=blog.title}}
+            <div class="sub header">{{=blog.created_time.strftime("%Y/%m/%d")}}
+            •
+            {{=unicode(blog.category)}}
+            </div>
+        </div>
+    </h2>
+    <div class="ui divider"></div>
+    {{from uliweb.utils.textconvert import text2html}}
+    <div>{{<< text2html(blog.content)}}</div>
 </div>
+{{pass}}
+{{end}}
+
+{{block sidebar}}
+    <h3 class="ui header">Categories</h3>
+    <ul class="ui list">
+    {{for c in categories:}}
+        <li class="item">{{=unicode(c)}}</li>
+    {{pass}}
+    </ul>
 {{end}}
